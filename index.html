@@ -587,4 +587,98 @@
     e.preventDefault();
     const btn = e.target.querySelector('.form-submit');
     btn.textContent = '✓ Заявка отправлена! Мы свяжемся с вами скоро.';
-    btn.style.background = 'linear-gradient(135de
+    
+    btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+    btn.disabled = true;
+  }
+</script>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOnBg(event)">
+  <div class="modal" id="modal-box">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-icon" id="modal-icon"></div>
+    <div class="modal-subtitle" id="modal-subtitle"></div>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-text" id="modal-text"></div>
+    <div class="modal-video">
+      🎬 Здесь будет видео<br><span style="font-size:0.75rem; margin-top:0.5rem; display:block;">Вставьте ссылку на YouTube или загрузите видео</span>
+    </div>
+    <div class="modal-materials">
+      <h5>Материалы по теме</h5>
+      <div id="modal-tags"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const modalData = {
+  drinking: {
+    icon: "🥤",
+    title: "Питьевая вода",
+    subtitle: "pH 8.5 · pH 9.0 · pH 9.5",
+    text: "Щелочная Kangen-вода с pH 8.5–9.5 — идеальная вода для ежедневного употребления. Она имеет мягкий и приятный вкус, богата молекулярным водородом и помогает поддерживать кислотно-щелочной баланс организма. Рекомендуется пить 1.5–2 литра в день.",
+    tags: ["Иммунитет", "Гидратация", "Антиоксиданты", "pH баланс", "Молекулярный водород"]
+  },
+  cooking: {
+    icon: "🥗",
+    title: "Вода для еды",
+    subtitle: "pH 6.0",
+    text: "Слабокислая вода pH 6.0 идеально подходит для приготовления пищи. Она раскрывает естественный вкус продуктов, сохраняет цвет овощей при варке и делает рис более рассыпчатым. Используйте для чая, кофе и приготовления блюд.",
+    tags: ["Чай и кофе", "Варка риса", "Супы", "Вкус продуктов", "Цвет овощей"]
+  },
+  skin: {
+    icon: "🧴",
+    title: "Уход за кожей",
+    subtitle: "pH 4.0 – pH 6.0",
+    text: "Кислая вода с pH 4.0–6.0 соответствует естественному pH кожи. Она тонизирует, сужает поры, увлажняет и создаёт защитный барьер. Используйте как тоник, для умывания или ополаскивания волос — без мыла и химии.",
+    tags: ["Тоник для лица", "Ополаскиватель для волос", "Уход за телом", "Акне", "Чувствительная кожа"]
+  },
+  veggies: {
+    icon: "🥦",
+    title: "Очистка продуктов",
+    subtitle: "pH 11.5",
+    text: "Сильнощелочная вода pH 11.5 эффективно удаляет с поверхности фруктов и овощей пестициды, химические удобрения и жировые загрязнения. Замочите продукты на 10–20 минут — и они станут чище и безопаснее без использования химических средств.",
+    tags: ["Пестициды", "Нитраты", "Фрукты", "Овощи", "Мясо и рыба"]
+  },
+  cleaning: {
+    icon: "🧹",
+    title: "Экологичная уборка",
+    subtitle: "pH 11.5",
+    text: "Сильнощелочная вода pH 11.5 — мощное натуральное обезжиривающее средство. Она растворяет жир, масло и загрязнения на кухне, ванной и других поверхностях. Заменяет большинство бытовых химических средств и безопасна для детей и животных.",
+    tags: ["Кухня", "Ванная", "Обезжиривание", "Без химии", "Безопасно для детей"]
+  },
+  garden: {
+    icon: "🌱",
+    title: "Сад и растения",
+    subtitle: "pH 8.5 – pH 9.5",
+    text: "Структурированная щелочная вода Kangen улучшает прорастание семян, ускоряет рост растений и делает цветение более пышным. Многие садоводы отмечают заметную разницу уже через 2–3 недели полива Kangen-водой.",
+    tags: ["Комнатные растения", "Огород", "Семена", "Цветение", "Здоровье растений"]
+  }
+};
+
+function openModal(type) {
+  const data = modalData[type];
+  document.getElementById("modal-icon").textContent = data.icon;
+  document.getElementById("modal-title").textContent = data.title;
+  document.getElementById("modal-subtitle").textContent = data.subtitle;
+  document.getElementById("modal-text").textContent = data.text;
+  document.getElementById("modal-tags").innerHTML = data.tags.map(t => "<span class='modal-tag'>" + t + "</span>").join("");
+  document.getElementById("modal-overlay").classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  document.getElementById("modal-overlay").classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+function closeModalOnBg(e) {
+  if (e.target === document.getElementById("modal-overlay")) closeModal();
+}
+
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+</script>
+
+</body>
+</html>
